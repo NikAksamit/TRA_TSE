@@ -54,9 +54,7 @@ spmd(cpu_num)
     x_spmd=xt(1,Range);
     y_spmd=yt(1,Range);
     z_spmd=zt(1,Range);
-    
-    
-    Acc_spmd=0*z_spmd;
+
     time_note=zeros(size(x_spmd));
     TSE_spmd=zeros(size(x_spmd));
     TRA_spmd=zeros(size(x_spmd));
@@ -96,8 +94,7 @@ spmd(cpu_num)
         y_spmd(2,:) = y_spmd(1,:) + deltay(2,:);
         z_spmd(2,:) = z_spmd(1,:) + deltaz(2,:);
         
-        
-        
+
         %%%% If particle leaves domain, keep record of last position.
         %%%% Record this time of leaving domain in time_note.
         x_spmd(1,~isnan(x_spmd(2,:)) & ~isnan(y_spmd(2,:)))=x_spmd(2,~isnan(x_spmd(2,:)) & ~isnan(y_spmd(2,:)));
@@ -150,8 +147,7 @@ spmd(cpu_num)
         end
     end
     
-    
-    
+
     TSE_spmd=TSE_spmd(1,:);
     TRA_spmd=TRA_spmd(1,:);
     TSE_spmd_NM=TSE_spmd_NM(1,:);
@@ -168,9 +164,9 @@ zt = cat(2,z_spmd{:});
 time_note = cat(2,time_note{:});
 TSE=cat(2,TSE_spmd_NM{:})/(tspan(end)-tspan(1));
 TSE_Bar=cat(2,TSE_spmd{:})/(tspan(end)-tspan(1));
-TRA_Bar=cat(2,TRA_spmd{:});
+TRA_Bar=cat(2,TRA_spmd{:})/(tspan(end)-tspan(1));
 
-TRA=real(acos(V1(:,1).*V2(:,1)+V1(:,2).*V2(:,2)));
+TRA=real(acos(V1(:,1).*V2(:,1)+V1(:,2).*V2(:,2)))/(tspan(end)-tspan(1));
 
 clear x_spmd y_spmd
 

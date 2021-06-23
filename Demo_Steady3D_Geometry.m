@@ -33,8 +33,8 @@ w_interp=griddedInterpolant({x_span,y_span,z_span},Lap_vz,'linear','none');
 
 %%
 disp('Running Advection')
-x_sparse = linspace(2.26,2.36,199);
-y_sparse = linspace(0.33,0.47,200);
+x_sparse = linspace(2.26,2.36,299);
+y_sparse = linspace(0.33,0.47,300);
 z_sparse = 2.55;
 
 [x_gr,y_gr,z_gr]=ndgrid(x_sparse,y_sparse,z_sparse);
@@ -42,7 +42,7 @@ z_sparse = 2.55;
 
 
 tfin=0.75;
-sVec=linspace(0,tfin,10000);
+sVec=linspace(0,tfin,15000);
 [xt,yt,zt,time_note,TSE_Bar,~,TRA_Bar] = Advect_and_Calculate_3DSteady(sVec,x_gr(:),y_gr(:),z_gr(:),u_interp,v_interp,w_interp,NCores);
 
 disp(' ')
@@ -57,7 +57,7 @@ TRA_Bar=reshape(real(TRA_Bar),size(x_gr));
 surf(x_gr,y_gr,TRA_Bar)
 view(0,90)
 shading interp
-title('$\overline{\mathrm{TRA}}_0^{0.75}$','Interpreter','latex')
+title('$\overline{\mathrm{NTRA}}_0^{0.75}(\mathbf{x}_0)$','Interpreter','latex')
 axis tight
 colormap(ax(1),[gray_col(:,1)+col, gray_col(:,2), gray_col(:,3)])
 daspect([1 1 1])
@@ -72,7 +72,7 @@ TSE_Bar=reshape(real(TSE_Bar),size(x_gr));
 surf(x_gr,y_gr,TSE_Bar)
 view(0,90)
 shading interp
-title('$\overline{\mathrm{TSE}}_0^{0.75}$','Interpreter','latex')
+title('$\overline{\mathrm{NTSE}}_0^{0.75}(\mathbf{x}_0)$','Interpreter','latex')
 axis tight
 colormap(ax(2),[gray_col(:,1), gray_col(:,2), gray_col(:,3)+col])
 daspect([1 1 1])

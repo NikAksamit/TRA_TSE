@@ -22,8 +22,8 @@ w_interp=griddedInterpolant({x_span,y_span,z_span},Lap_vz,'linear','none');
 
 %%
 disp('Running Advection')
-x_sparse = linspace(2.26,2.36,199);
-y_sparse = linspace(0.33,0.47,200);
+x_sparse = linspace(2.26,2.36,299);
+y_sparse = linspace(0.33,0.47,300);
 z_sparse = 2.55;
 
 [x_gr,y_gr,z_gr]=ndgrid(x_sparse,y_sparse,z_sparse);
@@ -46,7 +46,7 @@ TRA_Bar=reshape(real(TRA_Bar),size(x_gr));
 surf(x_gr,y_gr,TRA_Bar)
 view(0,90)
 shading interp
-title('$\overline{\mathrm{TRA}}_0^{10^{-3}}$','Interpreter','latex')
+title('$\overline{\mathrm{TRA}}_0^{10^{-3}}(\mathbf{x}_0)$','Interpreter','latex')
 axis tight
 colormap(ax(1),[gray_col(:,1)+col, gray_col(:,2), gray_col(:,3)])
 daspect([1 1 1])
@@ -60,7 +60,7 @@ TRA=reshape(real(TRA),size(x_gr));
 surf(x_gr,y_gr,TRA)
 view(0,90)
 shading interp
-title('$\mathrm{TRA}_0^{10^{-3}}$','Interpreter','latex')
+title('$\mathrm{TRA}_0^{10^{-3}}(\mathbf{x}_0)$','Interpreter','latex')
 axis tight
 colormap(ax(2),[gray_col(:,1)+col, gray_col(:,2), gray_col(:,3)])
 daspect([1 1 1])
@@ -75,7 +75,7 @@ TSE_Bar=reshape(real(TSE_Bar),size(x_gr));
 surf(x_gr,y_gr,TSE_Bar)
 view(0,90)
 shading interp
-title('$\overline{\mathrm{TSE}}_0^{10^{-3}}$','Interpreter','latex')
+title('$\overline{\mathrm{TSE}}_0^{10^{-3}}(\mathbf{x}_0)$','Interpreter','latex')
 axis tight
 colormap(ax(3),[gray_col(:,1), gray_col(:,2), gray_col(:,3)+col])
 daspect([1 1 1])
@@ -89,7 +89,7 @@ TSE=reshape(real(TSE),size(x_gr));
 surf(x_gr,y_gr,TSE)
 view(0,90)
 shading interp
-title('$\mathrm{TSE}_0^{10^{-3}}$','Interpreter','latex')
+title('$\mathrm{TSE}_0^{10^{-3}}(\mathbf{x}_0)$','Interpreter','latex')
 axis tight
 colormap(ax(4),[gray_col(:,1), gray_col(:,2), gray_col(:,3)+col])
 daspect([1 1 1])

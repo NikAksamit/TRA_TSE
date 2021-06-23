@@ -152,9 +152,9 @@ yt = cat(2,y_spmd{:});
 time_note = cat(2,time_note{:});
 TSE=cat(2,TSE_spmd_NM{:})/(tspan(end)-tspan(1));
 TSE_Bar=cat(2,TSE_spmd{:})/(tspan(end)-tspan(1));
-TRA_Bar=cat(2,TRA_spmd{:});
+TRA_Bar=cat(2,TRA_spmd{:})/(tspan(end)-tspan(1));
 
-TRA=real(acos(V1(:,1).*V2(:,1)+V1(:,2).*V2(:,2)));
+TRA=real(acos(V1(:,1).*V2(:,1)+V1(:,2).*V2(:,2)))/(tspan(end)-tspan(1));
 
 clear x_spmd y_spmd
 

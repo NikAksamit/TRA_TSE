@@ -7,8 +7,8 @@
 % Output arguments:
 %   xt,yt    : xx-component, yy-component of trajectory final position
 %   time_note    : tspan time if a trajectory left interpolant domain
-%   TSE_Bar_EPS,TRA_Bar_EPS,TRA_EPS    : Single trajectory metrics from
-%   section IV in [1]
+%   TSE_Bar_EPS,TRA_Bar_EPS,TSE_EPS    : Single trajectory metrics from
+%   section IV in [1] (Theorem 3)
 
 %--------------------------------------------------------------------------
 % Author: Nikolas Aksamit  naksamit@ethz.ch
@@ -25,7 +25,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-function     [xt,yt,time_note,TSE_Bar_EPS,TRA_Bar_EPS,TRA_EPS] = Advect_and_Calculate_2DUnsteady(tspan,xx,yy,U_Interp,V_Interp,NCores)
+function     [xt,yt,time_note,TSE_Bar_EPS,TRA_Bar_EPS,TSE_EPS] = Advect_and_Calculate_2DUnsteady(tspan,xx,yy,U_Interp,V_Interp,NCores)
 
 %%% Calculate v_0 as spatio-temporal mean of the flow in your domain of
 %%% interest
@@ -131,19 +131,14 @@ end
 
 V1 = cat(1,V1_spmd{:});
 V2 = cat(1,V2_spmd{:});
-V1_EPS=[V1/v_0, ones(size(V1,1),1)];
-V2_EPS=[V2/v_0, ones(size(V1,1),1)];
-
-V1_EPS=V1_EPS./(sqrt(sum(V1_EPS.*V1_EPS,2)));
-V2_EPS=V2_EPS./(sqrt(sum(V2_EPS.*V2_EPS,2)));
-TRA_EPS=real(acos(V1_EPS(:,1).*V2_EPS(:,1)+V1_EPS(:,2).*V2_EPS(:,2)));
+TSE_EPS=1/(tspan(end)-tspan(1))*log(sqrt((sum(V2.*V2,2)+v_0.^2)./(sum(V1.*V1,2).^2+v_0.^2)));
 
 xt = cat(2,x_spmd{:});
 yt = cat(2,y_spmd{:});
 time_note = cat(2,time_note{:});
 
 TSE_Bar_EPS=cat(2,TSE_EPS_spmd{:})/(tspan(end)-tspan(1));
-TRA_Bar_EPS=cat(2,TRA_EPS_spmd{:});
+TRA_Bar_EPS=cat(2,TRA_EPS_spmd{:})/(tspan(end)-tspan(1));
 
 clear x_spmd y_spmd
 

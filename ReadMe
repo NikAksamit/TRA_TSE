@@ -1,0 +1,54 @@
+ --------------------------------------------------------------------------
+ Author: Nikolas Aksamit  naksamit@ethz.ch
+--------------------------------------------------------------------------
+ 
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% References:
+ [1] Haller, G., Aksamit, N. O., & Bartos, A. P. E. (2021). Quasi-Objective Coherent Structure Diagnostics from Single Trajectories. 
+  Chaos, 31, 043131-1â€“17. https://doi.org/10.1063/5.0044151
+ [2] Aksamit, N.O., Haller, G. (2021). Objective Momentum Barriers in Wall Turbulence. 
+  In Review,  http://arxiv.org/abs/2106.07372
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Calculate TRA and TSE diagnostics for 2D and 3D, steady and unsteady flows. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The four “Advect_and_Calculate” scripts provide the tools to calculate TRA, and TSE values as described in [1] for both 2D and 3D, steady and unsteady flows. For the unsteady cases, the extended phase space versions are calculated which require a choice of v_0. The default choice is the spatio-temporal mean of the flow velocity magnitude in the domain of interest.
+
+Each Advect_and_Calculate script uses similar input formats:
+
+Advect_and_Calculate_2DSteady.m
+% Input arguments:
+     tspan                        : Discrete advection timesteps used for RK4 advection scheme. This must include all intermediate steps between initial and final times(e.g. tspan=linspace(t_initial,t_final,100). For the steady case, these are dummy times as the velocity field is autonomous.
+     xx,yy                        : Initial positions for advection. These must be formatted as Nx1 vectors
+     U_Interp,V_Interp            : Velocity field interpolants with inputs (xx,yy)
+     NCores                       : Number of Cores for parpool
+ 
+    % Output arguments:
+       xt,yt    : xx-component, yy-component of trajectory final position. 
+       time_note    : tspan time if a trajectory left interpolant domain
+       TSE_Bar,TSE,TRA_Bar,TRA    : Single trajectory metrics from   section II and III in [1]
+
+Advect_and_Calculate_2DUnsteady.m
+% Input arguments:
+     tspan                        : Discrete advection timesteps used for RK4 advection scheme. This must include all intermediate steps between initial and final times(e.g. tspan=linspace(t_initial,t_final,100). For the unsteady case, these are times used in the velocity field interplant.
+     xx,yy                        : Initial positions for advection. These must be formatted as Nx1 vectors
+     U_Interp,V_Interp            : Velocity field interpolants with inputs (time,xx,yy)
+     NCores                       : Number of Cores for parpool
+ 
+    % Output arguments:
+       xt,yt    : xx-component, yy-component of trajectory final position. 
+       time_note    : tspan time if a trajectory left interpolant domain
+       TSE_Bar,TSE,TRA_Bar    : Extended phase-space single trajectory metrics from section IV [1]
+
+Note: For unsteady cases you can modify v_0, or leave as the mean of values used to define flow field interpolants. Advect_and_Calculate_3DSteady.m and Advect_and_Calculate_3DUnsteady.m are of the same format, with an extra z-component.
+
+Demo_Unsteady2D.m
+Demonstration of unsteady TRA and TSE calculations for geostrophic ocean current data as in [1].
+
+Demo_Steady3D.m
+Demonstration of steady TRA and TSE calculations for Johns Hopkins Turbulence Database Re=1000 Channel flow as in [2].
+
+Demo_Steady3D_Geometry.m
+Demonstration of steady NTRA and NTSE (normalized) calculations for Johns Hopkins Turbulence Database Re=1000 Channel flow as in [2].
+
